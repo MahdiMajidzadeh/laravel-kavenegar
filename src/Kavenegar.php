@@ -1,0 +1,214 @@
+<?php
+
+namespace MahdiMajidzadeh\kavenegar;
+
+use GuzzleHttp\Client;
+
+class Kavenegar
+{
+
+    private $base_url;
+
+    public function __construct()
+    {
+        $this->base_url = config('kavenegar.base_url').config('kavenegar.key').'/';
+    }
+
+    public function send($receptor, $message, $sender = null, $date = null, $type = null, $localid = null)
+    {
+        if (is_array($receptor)) {
+            $receptor = implode(",", $receptor);
+        }
+        if (is_array($localid)) {
+            $localid = implode(",", $localid);
+        }
+
+        $params = array(
+            "receptor" => $receptor,
+            "sender" => $sender,
+            "message" => $message,
+            "date" => $date,
+            "type" => $type,
+            "localid" => $localid
+        );
+
+        return $this->execute('sms/send.json', $params);
+    }
+
+    public function sendArray($receptor, $sender, $message, $date = null, $type = null, $localmessageid = null)
+    {
+        if (!is_array($receptor)) {
+            $receptor = (array) $receptor;
+        }
+        if (!is_array($sender)) {
+            $sender = (array) $sender;
+        }
+        if (!is_array($message)) {
+            $message = (array) $message;
+        }
+        $repeat = count($receptor);
+        if (!is_null($type) && !is_array($type)) {
+            $type = array_fill(0, $repeat, $type);
+        }
+        if (!is_null($localmessageid) && !is_array($localmessageid)) {
+            $localmessageid = array_fill(0, $repeat, $localmessageid);
+        }
+
+        $params = array(
+            "receptor" => json_encode($receptor),
+            "sender" => json_encode($sender),
+            "message" => json_encode($message),
+            "date" => $date,
+            "type" => json_encode($type),
+            "localmessageid" => json_encode($localmessageid)
+        );
+
+        return $this->execute('sms/sendarray.json', $params);
+    }
+
+    public function status($messageid)
+    {
+        $params = array(
+            "messageid" => is_array($messageid) ? implode(",", $messageid) : $messageid
+        );
+
+        return $this->execute('sms/status.json',$params);
+    }
+
+    public function statusLocalMessageid($localid)
+    {
+        $params = array(
+            "localid" => is_array($localid) ? implode(",", $localid) : $localid
+        );
+        return $this->execute('sms/statuslocalmessageid.json', $params);
+    }
+
+    public function select($messageid)
+    {
+        $params = array(
+            "messageid" => is_array($messageid) ? implode(",", $messageid) : $messageid
+        );
+
+        return $this->execute('sms/select.json', $params);
+    }
+
+    public function selectOutbox($startdate, $enddate = null, $sender = null)
+    {
+        $params = array(
+            "startdate" => $startdate,
+            "enddate" => $enddate,
+            "sender" => $sender
+        );
+
+        return $this->execute('sms/selectoutbox.json', $params);
+    }
+
+    public function latestOutbox($pagesize = null, $sender = null)
+    {
+        $params = array(
+            "pagesize" => $pagesize,
+            "sender" => $sender
+        );
+
+        return $this->execute('sms/latestoutbox.json', $params);
+    }
+
+    public function countOutbox($statustext, $startdate = null, $status = 1)
+    {
+        $params = array(
+            "statustext" => $statustext,
+            "startdate" => $startdate,
+            "status" => $status
+        );
+
+        return $this->execute('sms/countoutbox.json', $params);
+    }
+
+    public function cancel($messageid)
+    {
+        $params = array(
+            "messageid" => is_array($messageid) ? implode(",", $messageid) : $messageid
+        );
+
+        return $this->execute('sms/cancel.json',$params);
+    }
+
+    public function Receive($linenumber, $isread = 0)
+    {
+        $params = array(
+            "linenumber" => $linenumber,
+            "isread" => $isread
+        );
+
+        return $this->execute('sms/receive.json', $params);
+    }
+
+    public function countInbox($startdate, $enddate, $linenumber, $isread = 0)
+    {
+        $params = array(
+            "startdate" => $startdate,
+            "enddate" => $enddate,
+            "linenumber" => $linenumber,
+            "isread" => $isread
+        );
+
+        return $this->execute('sms/countinbox.json', $params);
+    }
+
+    public function countPostalcode($postalcode)
+    {
+        $params = array(
+            "postalcode" => $postalcode
+        );
+        return $this->execute('sms/countpostalcode.json', $params);
+    }
+
+
+    public function sendByPostalcode($postalcode, $sender, $message, $mcistartindex, $mcicount, $mtnstartindex, $mtncount, $date = null)
+    {
+        $params = array(
+            "postalcode" => $postalcode,
+            "sender" => $sender,
+            "message" => $message,
+            "mcistartindex" => $mcistartindex,
+            "mcicount" => $mcicount,
+            "mtnstartindex" => $mtnstartindex,
+            "mtncount" => $mtncount,
+            "date" => $date
+        );
+
+        return $this->execute('sms/sendbypostalcode.json', $params);
+    }
+
+    public function lookup($receptor, $template, $token, $token2 = null, $token3 = null, $type = null)
+    {
+        $params = array(
+            "receptor" => $receptor,
+            "token" => $token,
+            "token2" => $token2,
+            "token3" => $token3,
+            "template" => $template,
+            "type" => $type
+        );
+
+        return $this->execute('verify/lookup.json', $params);
+    }
+
+    private function execute($url, $params)
+    {
+        $client = new Client([
+            'base_uri' => $this->base_url,
+        ]);
+
+        $response = $client->request('POST', $url, [
+            'form_params' => $params
+        ]);
+
+        $body = (string)$response->getBody();
+
+//        return json_decode($body);
+        return ($body);
+
+//        return $this->base_url;
+    }
+}
