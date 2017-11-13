@@ -75,7 +75,7 @@ class SMS
             "messageid" => is_array($messageid) ? implode(",", $messageid) : $messageid
         );
 
-        return $this->execute('status.json',$params);
+        return $this->execute('status.json', $params);
     }
 
     public function statusLocalMessageid($localid)
@@ -133,7 +133,7 @@ class SMS
             "messageid" => is_array($messageid) ? implode(",", $messageid) : $messageid
         );
 
-        return $this->execute('cancel.json',$params);
+        return $this->execute('cancel.json', $params);
     }
 
     public function Receive($linenumber, $isread = 0)
