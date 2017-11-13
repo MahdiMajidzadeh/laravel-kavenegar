@@ -9,7 +9,7 @@
 Via Composer
 
 ``` bash
-composer require mahdimajidzadeh/kavenegar
+$ composer require mahdimajidzadeh/kavenegar
 ```
 If you do not run Laravel 5.5 (or higher), then add the service provider in config/app.php:
 
@@ -21,8 +21,9 @@ If you do run the package on Laravel 5.5+, package auto-discovery takes care of 
 
 You must publish the configuration to provide an own service provider stub.
 
+``` bash
 $ php artisan vendor:publish --provider="MahdiMajidzadeh\kavenegar\KavenegarServiceProvider"
-
+```
 
 ## Usage
 See documention for params and others at [kavenegar docs](http://kavenegar.com/rest.html)
