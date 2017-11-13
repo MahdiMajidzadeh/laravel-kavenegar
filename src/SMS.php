@@ -4,14 +4,17 @@ namespace MahdiMajidzadeh\kavenegar;
 
 use GuzzleHttp\Client;
 
-class Kavenegar
+class SMS
 {
-
     private $base_url;
+    private $prefix = 'sms';
+
+    public $status = null;
+    public $message = null;
 
     public function __construct()
     {
-        $this->base_url = config('kavenegar.base_url').config('kavenegar.key').'/';
+        $this->base_url = config('kavenegar.base_url').config('kavenegar.key').'/'. $this->prefix .'/';
     }
 
     public function send($receptor, $message, $sender = null, $date = null, $type = null, $localid = null)
@@ -32,7 +35,7 @@ class Kavenegar
             "localid" => $localid
         );
 
-        return $this->execute('sms/send.json', $params);
+        return $this->execute('send.json', $params);
     }
 
     public function sendArray($receptor, $sender, $message, $date = null, $type = null, $localmessageid = null)
@@ -63,7 +66,7 @@ class Kavenegar
             "localmessageid" => json_encode($localmessageid)
         );
 
-        return $this->execute('sms/sendarray.json', $params);
+        return $this->execute('sendarray.json', $params);
     }
 
     public function status($messageid)
@@ -72,7 +75,7 @@ class Kavenegar
             "messageid" => is_array($messageid) ? implode(",", $messageid) : $messageid
         );
 
-        return $this->execute('sms/status.json',$params);
+        return $this->execute('status.json',$params);
     }
 
     public function statusLocalMessageid($localid)
@@ -80,7 +83,7 @@ class Kavenegar
         $params = array(
             "localid" => is_array($localid) ? implode(",", $localid) : $localid
         );
-        return $this->execute('sms/statuslocalmessageid.json', $params);
+        return $this->execute('statuslocalmessageid.json', $params);
     }
 
     public function select($messageid)
@@ -89,7 +92,7 @@ class Kavenegar
             "messageid" => is_array($messageid) ? implode(",", $messageid) : $messageid
         );
 
-        return $this->execute('sms/select.json', $params);
+        return $this->execute('select.json', $params);
     }
 
     public function selectOutbox($startdate, $enddate = null, $sender = null)
@@ -100,7 +103,7 @@ class Kavenegar
             "sender" => $sender
         );
 
-        return $this->execute('sms/selectoutbox.json', $params);
+        return $this->execute('selectoutbox.json', $params);
     }
 
     public function latestOutbox($pagesize = null, $sender = null)
@@ -110,7 +113,7 @@ class Kavenegar
             "sender" => $sender
         );
 
-        return $this->execute('sms/latestoutbox.json', $params);
+        return $this->execute('latestoutbox.json', $params);
     }
 
     public function countOutbox($statustext, $startdate = null, $status = 1)
@@ -121,7 +124,7 @@ class Kavenegar
             "status" => $status
         );
 
-        return $this->execute('sms/countoutbox.json', $params);
+        return $this->execute('countoutbox.json', $params);
     }
 
     public function cancel($messageid)
@@ -130,7 +133,7 @@ class Kavenegar
             "messageid" => is_array($messageid) ? implode(",", $messageid) : $messageid
         );
 
-        return $this->execute('sms/cancel.json',$params);
+        return $this->execute('cancel.json',$params);
     }
 
     public function Receive($linenumber, $isread = 0)
@@ -140,7 +143,7 @@ class Kavenegar
             "isread" => $isread
         );
 
-        return $this->execute('sms/receive.json', $params);
+        return $this->execute('receive.json', $params);
     }
 
     public function countInbox($startdate, $enddate, $linenumber, $isread = 0)
@@ -152,7 +155,7 @@ class Kavenegar
             "isread" => $isread
         );
 
-        return $this->execute('sms/countinbox.json', $params);
+        return $this->execute('countinbox.json', $params);
     }
 
     public function countPostalcode($postalcode)
@@ -160,7 +163,7 @@ class Kavenegar
         $params = array(
             "postalcode" => $postalcode
         );
-        return $this->execute('sms/countpostalcode.json', $params);
+        return $this->execute('countpostalcode.json', $params);
     }
 
 
@@ -177,7 +180,7 @@ class Kavenegar
             "date" => $date
         );
 
-        return $this->execute('sms/sendbypostalcode.json', $params);
+        return $this->execute('sendbypostalcode.json', $params);
     }
 
     public function lookup($receptor, $template, $token, $token2 = null, $token3 = null, $type = null)
@@ -204,11 +207,13 @@ class Kavenegar
             'form_params' => $params
         ]);
 
-        $body = (string)$response->getBody();
+        $body = (string) $response->getBody();
 
-//        return json_decode($body);
-        return ($body);
+        $result = json_decode($body);
 
-//        return $this->base_url;
+        $this->status = $result->return->status;
+        $this->message = $result->return->message;
+
+        return $result->entries;
     }
 }
