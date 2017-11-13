@@ -136,7 +136,7 @@ class SMS
         return $this->execute('cancel.json', $params);
     }
 
-    public function Receive($linenumber, $isread = 0)
+    public function receive($linenumber, $isread = 0)
     {
         $params = array(
             "linenumber" => $linenumber,
@@ -181,20 +181,6 @@ class SMS
         );
 
         return $this->execute('sendbypostalcode.json', $params);
-    }
-
-    public function lookup($receptor, $template, $token, $token2 = null, $token3 = null, $type = null)
-    {
-        $params = array(
-            "receptor" => $receptor,
-            "token" => $token,
-            "token2" => $token2,
-            "token3" => $token3,
-            "template" => $template,
-            "type" => $type
-        );
-
-        return $this->execute('verify/lookup.json', $params);
     }
 
     private function execute($url, $params)
