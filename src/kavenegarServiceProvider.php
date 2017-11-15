@@ -1,10 +1,10 @@
 <?php
 
-namespace MahdiMajidzadeh\kavenegar;
+namespace MahdiMajidzadeh\Kavenegar;
 
 use Illuminate\Support\ServiceProvider;
 
-class kavenegarServiceProvider extends ServiceProvider
+class KavenegarServiceProvider extends ServiceProvider
 {
     public function boot()
     {

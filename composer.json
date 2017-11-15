@@ -34,7 +34,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "MahdiMajidzadeh\\kavenegar\\KavenegarServiceProvider"
+                "MahdiMajidzadeh\\Kavenegar\\KavenegarServiceProvider"
             ]
         }
     },
