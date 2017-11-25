@@ -4,7 +4,9 @@
     "description": "Laravel package for Kavenegar sms",
     "keywords": [
         "sms",
-        "kavenegar"
+        "kavenegar",
+        "laravel",
+        "laravel-package"
     ],
     "homepage": "https://github.com/MahdiMajidzadeh/kavenegar",
     "license": "MIT",
