@@ -1,7 +1,8 @@
 # Laravel Kavenegar
 
 [![StyleCI](https://styleci.io/repos/110477751/shield?branch=master)](https://styleci.io/repos/110477751)
-
+[![packagist](https://img.shields.io/badge/packagist-v0.2-green.svg?style=flat-square)](https://packagist.org/packages/mahdimajidzadeh/kavenegar)
+![status](https://img.shields.io/badge/status-stable-blue.svg?style=flat-square)
 
 
 ## Install
