@@ -4,7 +4,7 @@ namespace MahdiMajidzadeh\Kavenegar;
 
 use Illuminate\Support\ServiceProvider;
 
-class KavenegarServiceProvider extends ServiceProvider
+class kavenegarServiceProvider extends ServiceProvider
 {
     public function boot()
     {
