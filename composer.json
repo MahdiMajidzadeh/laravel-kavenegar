@@ -34,8 +34,5 @@
                 "MahdiMajidzadeh\\Kavenegar\\KavenegarServiceProvider"
             ]
         }
-    },
-    "config": {
-        "sort-packages": true
     }
 }
