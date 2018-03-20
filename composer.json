@@ -8,7 +8,7 @@
         "laravel",
         "laravel-package"
     ],
-    "homepage": "https://github.com/MahdiMajidzadeh/laravel-kavenegar",
+    "homepage": "https://github.com/MahdiMajidzadeh/kavenegar",
     "license": "MIT",
     "authors": [
         {
@@ -25,12 +25,7 @@
     },
     "autoload": {
         "psr-4": {
-            "MahdiMajidzadeh\\kavenegar\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "MahdiMajidzadeh\\kavenegar\\": "tests"
+            "MahdiMajidzadeh\\Kavenegar\\": "src"
         }
     },
     "extra": {
