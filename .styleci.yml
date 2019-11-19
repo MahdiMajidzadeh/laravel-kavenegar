@@ -1,5 +1,7 @@
 preset: recommended
-risky: true
+
+risky: false
+
 finder:
   exclude:
     - modules
