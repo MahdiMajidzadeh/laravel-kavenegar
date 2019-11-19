@@ -30,7 +30,7 @@ $ php artisan vendor:publish --provider="MahdiMajidzadeh\kavenegar\KavenegarServ
 See documention for params and others at [kavenegar docs](http://kavenegar.com/rest.html)
 
 ``` php
-$sms = new SMS();
+$sms = new KavenegarSMS();
 $result = $sms->send($receptor, $message);
 
 $sms->status; // like 200
@@ -39,7 +39,7 @@ $sms->message; // like "تایید شد"
 
 All available methods:
 ``` php
-$sms = new SMS();
+$sms = new KavenegarSMS();
 $sms->send(...);
 $sms->sendArray(...);
 $sms->status(...);
@@ -54,7 +54,7 @@ $sms->receive(...);
 $sms->countPostalcode(...);
 $sms->sendByPostalcode(...);
 
-$verify = new Verify();
+$verify = new KavenegarVerify();
 $verify->lookup(...);
 ```
 
