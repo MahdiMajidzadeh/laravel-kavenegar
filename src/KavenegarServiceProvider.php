@@ -15,6 +15,12 @@ class KavenegarServiceProvider extends ServiceProvider
 
     public function register()
     {
-        //
+        $this->app->singleton('kavenegarSMS', function () {
+            return new KavenegarSMS;
+        });
+
+        $this->app->singleton('kavenegarVerify', function () {
+            return new KavenegarVerify;
+        });
     }
 }

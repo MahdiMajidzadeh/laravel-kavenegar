@@ -1,10 +1,10 @@
 <?php
 
-namespace MahdiMajidzadeh\kavenegar;
+namespace MahdiMajidzadeh\Kavenegar;
 
 use GuzzleHttp\Client;
 
-class SMS
+class KavenegarSMS
 {
     private $base_url;
     private $prefix = 'sms';
