@@ -14,19 +14,19 @@ class Verify
 
     public function __construct()
     {
-        $this->base_url = config('kavenegar.base_url').config('kavenegar.key').'/'. $this->prefix .'/';
+        $this->base_url = config('kavenegar.base_url').config('kavenegar.key').'/'.$this->prefix.'/';
     }
 
     public function lookup($receptor, $template, $token, $token2 = null, $token3 = null, $type = null)
     {
-        $params = array(
-            "receptor" => $receptor,
-            "token" => $token,
-            "token2" => $token2,
-            "token3" => $token3,
-            "template" => $template,
-            "type" => $type
-        );
+        $params = [
+            'receptor' => $receptor,
+            'token'    => $token,
+            'token2'   => $token2,
+            'token3'   => $token3,
+            'template' => $template,
+            'type'     => $type,
+        ];
 
         return $this->execute('lookup.json', $params);
     }
@@ -38,7 +38,7 @@ class Verify
         ]);
 
         $response = $client->request('POST', $url, [
-            'form_params' => $params
+            'form_params' => $params,
         ]);
 
         $body = (string) $response->getBody();
